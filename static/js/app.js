@@ -34,7 +34,7 @@ function buildPlots(id) {
         })
         // console.log(reversed);
 
-    
+        // Trace for Horizontal Bar Chart
         var traceBar = {
             type: "bar",
             orientation: 'h',
@@ -43,17 +43,43 @@ function buildPlots(id) {
             text: reversed.map(row => row.label),
             mode: 'markers'
           };
+        
+        var Bardata = [traceBar];
           
-        var data = [traceBar];
-          
-        var layout = {
+        var Barlayout = {
             title: `Top 10 OTUs for Sample ${id}` ,
-            xaxis: {autorange: true},
+            xaxis: {autorange: true, title: 'Sample Values'},
             yaxis: {autorange: true}
           };
-          
-        Plotly.newPlot("bar", data, layout);
+        
+        // Creating the Horizontal Bar Chart
+        Plotly.newPlot("bar", Bardata, Barlayout);
+
+
+        var traceBubble = {
+            x: response.otu_ids,
+            y: response.sample_values,
+            mode: 'markers',
+            marker: {
+                size: response.sample_values,
+                color: response.otu_ids
+            },
+            text: response.otu_labels
+        };
+
+        var Bubbledata = [traceBubble]
+
+        var Bubblelayout = {
+            title: `OTU Data for Sample ${id}`,
+            xaxis: {autorange: true, title:'OTU'},
+            yaxis: {autorange: true}
+        };
+
+        // Creating Bubble Chart
+        Plotly.newPlot('bubble', Bubbledata, Bubblelayout);
+
     })
 }
+
 
 buildPlots(940)
