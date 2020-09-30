@@ -1,4 +1,4 @@
-// Horizontal Bar Chart
+// Bubble Chart
 
 function buildPlots(id) {
     // Reading in the json dataset
