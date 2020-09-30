@@ -1,5 +1,25 @@
 // Demographics
+function demographics(id) {
+    // To build the demographics section we need to import the data again
+    d3.json('samples.json').then(function(samplesData){
+        var filtered = samplesData.metadata.filter(patient => patient.id == id);
+        
+        // Selecting the meta-data id on the html page
+        var selection = d3.select('#sample-metadata');
 
+        // Clear any data already present
+        selection.html('');
+
+        // Appending data extracted into the panel
+        var list = selection.append('ul')
+        Object.entries(filtered[0]).forEach(function(k,v){
+            var item = list.append('li');
+            item.html(k,v)
+        })
+    })
+}
+
+demographics(940)
 
 
 function buildPlots(id) {
