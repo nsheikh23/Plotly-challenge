@@ -1,4 +1,6 @@
-// Bubble Chart
+// Demographics
+
+
 
 function buildPlots(id) {
     // Reading in the json dataset
