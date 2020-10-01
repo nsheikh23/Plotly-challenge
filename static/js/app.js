@@ -21,6 +21,11 @@ function startup() {
     }).catch(error => console.log(error));
 }
 
+// Dynamic changing of plots and demographics upon change in dropdown
+function dropdown(newID){
+    buildPlots(newID);
+    demographics(newID);
+}
 
 // Building Bar Chart and Bubble Chart
 function buildPlots(id) {
@@ -28,19 +33,19 @@ function buildPlots(id) {
     d3.json("samples.json").then(function(samplesData){
         // console.log(samplesData);
         // Filtering for the id selected
-        var filtered = samplesData.samples.filter(patient => patient.id == id);
-        var response = filtered[0];
+        var filtered = samplesData.samples.filter(sample => sample.id == id);
+        var result = filtered[0];
         // console.log(filtered)
-        // console.log(response)
+        // console.log(result)
 
         // creating variables and storing the top 10 in an array
 
         Data = [];
-        for (i=0; i<response.sample_values.length; i++){
+        for (i=0; i<result.sample_values.length; i++){
             Data.push({
-                id: `OTU ${response.otu_ids[i]}`,
-                value: response.sample_values[i],
-                label: response.otu_labels[i]
+                id: `OTU ${result.otu_ids[i]}`,
+                value: result.sample_values[i],
+                label: result.otu_labels[i]
             });
         }
         // console.log(Data);
@@ -78,16 +83,16 @@ function buildPlots(id) {
         // Creating the Horizontal Bar Chart
         Plotly.newPlot("bar", Bardata, Barlayout);
 
-
+        // Bubble Chart
         var traceBubble = {
-            x: response.otu_ids,
-            y: response.sample_values,
+            x: result.otu_ids,
+            y: result.sample_values,
             mode: 'markers',
             marker: {
-                size: response.sample_values,
-                color: response.otu_ids
+                size: result.sample_values,
+                color: result.otu_ids
             },
-            text: response.otu_labels
+            text: result.otu_labels
         };
 
         var Bubbledata = [traceBubble]
@@ -95,21 +100,58 @@ function buildPlots(id) {
         var Bubblelayout = {
             title: `OTU Data for Sample ${id}`,
             xaxis: {autorange: true, title:'OTU'},
-            yaxis: {autorange: true}
+            yaxis: {autorange: true, title: 'Sample Values'}
         };
 
         // Creating Bubble Chart
         Plotly.newPlot('bubble', Bubbledata, Bubblelayout);
 
+
+        // Gauge Chart
+        var traceGauge = {
+            type: 'indicator',
+            mode: 'gauge+number+delta',
+            title: {
+                text: `Belly Button Washing Frequency from Sample ${id}`
+                    + 'Scrubs per week'
+            },
+            domain: {
+                x: [0,5],
+                y: [0,1]
+            },
+            gauge: {
+                axis: {
+                    range: [null, 10],
+                    tickwidth: 1
+                },
+                steps: [
+                    {range: [0,2]},
+                    {range: [2,4]},
+                    {range: [4,6]},
+                    {range: [6,8]},
+                    {range: [8,10]}   
+                ]
+            }
+        };
+
+        var Gaugedata = [traceGauge];
+
+        var Gaugelayout = {
+            width: 520,
+            height: 470,
+        };
+
+        // Creating Gauge Chart
+        Plotly.newPlot('gauge', Gaugedata, Gaugelayout);
+
     }).catch(error => console.log(error));
 }
-buildPlots(940)
 
 // Demographics
 function demographics(id) {
     // To build the demographics section we need to import the data again
     d3.json('samples.json').then(function(samplesData){
-        var filtered = samplesData.metadata.filter(patient => patient.id == id);
+        var filtered = samplesData.metadata.filter(sample => sample.id == id);
         
         // Selecting the meta-data id on the html page
         var selection = d3.select('#sample-metadata');
@@ -125,4 +167,5 @@ function demographics(id) {
         })
     }).catch(error => console.log(error));
 }
-demographics(940)
+
+startup();
