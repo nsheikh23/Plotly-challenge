@@ -1,10 +1,13 @@
 // Initializing the page and calling the other functions
 function startup() {
+
+    // Grabbing the dropdown element
+    var selector = d3.select('#selDataset');
+
     d3.json("samples.json").then(function(samplesData){
         var names = samplesData.names;
 
-        d3.selectAll('#selDataset')
-            .selectAll('option')
+        selector.selectAll('option')
             .data(names)
             .enter()
             .append('option')
@@ -19,13 +22,13 @@ function startup() {
         demographics(starter);
 
     }).catch(error => console.log(error));
-}
+};
 
 // Dynamic changing of plots and demographics upon change in dropdown
-function dropdown(newID){
+function optionChanged(newID){
     buildPlots(newID);
     demographics(newID);
-}
+};
 
 // Building Bar Chart and Bubble Chart
 function buildPlots(id) {
@@ -63,19 +66,23 @@ function buildPlots(id) {
         // console.log(reversed);
 
         // Trace for Horizontal Bar Chart
+        var colors = ['lime', '#24dbf7', 'yellow', 'orange', '#d8a0b9', 'green', '#f8ecb1', '#df7f4e', '#131065', 'red']
         var traceBar = {
             type: "bar",
             orientation: 'h',
             x: reversed.map(row=> row.value),
             y: reversed.map(row => row.id),
             text: reversed.map(row => row.label),
-            mode: 'markers'
+            mode: 'markers',
+            marker: {
+                color: colors
+            }
           };
         
         var Bardata = [traceBar];
           
         var Barlayout = {
-            title: `Top 10 OTUs for Sample ${id}` ,
+            title: `Top 10 OTUs for Subject ${id}` ,
             xaxis: {autorange: true, title: 'Sample Values'},
             yaxis: {autorange: true}
           };
@@ -90,7 +97,8 @@ function buildPlots(id) {
             mode: 'markers',
             marker: {
                 size: result.sample_values,
-                color: result.otu_ids
+                color: result.otu_ids,
+                colorscale: 'Jet'
             },
             text: result.otu_labels
         };
@@ -98,9 +106,9 @@ function buildPlots(id) {
         var Bubbledata = [traceBubble]
 
         var Bubblelayout = {
-            title: `OTU Data for Sample ${id}`,
-            xaxis: {autorange: true, title:'OTU'},
-            yaxis: {autorange: true, title: 'Sample Values'}
+            title: `OTU Data for Subject ${id}`,
+            xaxis: {title:'OTU ID'},
+            yaxis: {title: 'Sample Values'}
         };
 
         // Creating Bubble Chart
@@ -112,7 +120,7 @@ function buildPlots(id) {
             type: 'indicator',
             mode: 'gauge+number+delta',
             title: {
-                text: `Belly Button Washing Frequency from Sample ${id}`
+                text: `Belly Button Washing Frequency from Subject ${id}`
                     + 'Scrubs per week'
             },
             domain: {
@@ -160,11 +168,11 @@ function demographics(id) {
         selection.html('');
 
         // Appending data extracted into the panel
-        var list = selection.append('ul')
-        Object.entries(filtered[0]).forEach(function(k,v){
-            var item = list.append('li');
-            item.html(k,v)
-        })
+        Object.entries(filtered[0]).forEach(([k,v]) => {
+            // console.log(k,v)
+            selection.append('h5')
+                .text(`${k}: ${v}`);
+        });
     }).catch(error => console.log(error));
 }
 
