@@ -6,23 +6,13 @@ In this challenge, an interactive dashboard was built to explore the [Belly Butt
 
 The dataset reveals that a small handful of microbial species (also called operational taxonomic units, or OTUs, in the study) were present in more than 70% of people, while the rest were relatively rare.
 
-## Top 10 OTUs in each subject
+## Top 10 OTUs Per Subject
 
   ![Top 10 Bar Chart](Images/Top10Bar.png)
 
-3. Create a bubble chart that displays each sample.
+## All OTUs Per Subject
 
-* Use `otu_ids` for the x values.
-
-* Use `sample_values` for the y values.
-
-* Use `sample_values` for the marker size.
-
-* Use `otu_ids` for the marker colors.
-
-* Use `otu_labels` for the text values.
-
-![Bubble Chart](Images/bubble_chart.png)
+![Bubble Chart](Images/BubbleChart.png)
 
 4. Display the sample metadata, i.e., an individual's demographic information.
 
