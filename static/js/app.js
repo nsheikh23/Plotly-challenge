@@ -66,7 +66,7 @@ function buildPlots(id) {
         // console.log(reversed);
 
         // Trace for Horizontal Bar Chart
-        var colors = ['lime', '#24dbf7', 'yellow', 'orange', '#d8a0b9', 'green', '#f8ecb1', '#df7f4e', '#131065', 'red']
+        var colors = ['#fff100', '#ff8c00', '#e81123', '#ec008c', '#68217a', '#00188f', '#00bcf2', '#00b294', '#009e49', '#bad80a']
         var traceBar = {
             type: "bar",
             orientation: 'h',
@@ -82,7 +82,7 @@ function buildPlots(id) {
         var Bardata = [traceBar];
           
         var Barlayout = {
-            title: `Top 10 OTUs for Subject ${id}` ,
+            title: `<span style='font-size:1em; color:#00bcf2'><b>Top 10 OTUs for Subject ${id}<b></span>`,
             xaxis: {autorange: true, title: 'Sample Values'},
             yaxis: {autorange: true}
           };
@@ -106,7 +106,7 @@ function buildPlots(id) {
         var Bubbledata = [traceBubble]
 
         var Bubblelayout = {
-            title: `OTU Data for Subject ${id}`,
+            title: `<span style='font-size:1em; color:#00bcf2'><b>OTU Data for Subject ${id}<b></span>`,
             xaxis: {title:'OTU ID'},
             yaxis: {title: 'Sample Values'}
         };
@@ -120,9 +120,9 @@ function buildPlots(id) {
             type: 'indicator',
             mode: 'gauge+number+delta',
             title: {
-                text: `Belly Button Washing Frequency from Subject ${id}`
-                    + 'Scrubs per week'
+                text: `<span style='font-size:0.8em; color:#00bcf2'><b>Belly Button Washing Frequency<b><br>From Subject ${id}</span>`
             },
+            subtitle: {text: `# Scrubs per week`},
             domain: {
                 x: [0,5],
                 y: [0,1]
@@ -133,11 +133,11 @@ function buildPlots(id) {
                     tickwidth: 1
                 },
                 steps: [
-                    {range: [0,2]},
-                    {range: [2,4]},
-                    {range: [4,6]},
-                    {range: [6,8]},
-                    {range: [8,10]}   
+                    {range: [0,2], color: '#e81123'},
+                    {range: [2,4], color: '#ff8c00'},
+                    {range: [4,6], color: '#fff100'},
+                    {range: [6,8], color: '#00b294'},
+                    {range: [8,10], color: '#009e49'}   
                 ]
             }
         };
