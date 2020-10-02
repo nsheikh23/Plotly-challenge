@@ -1,6 +1,6 @@
 # Plotly-challenge
 
-![Bacteria by filterforge.com](Images/bacteria.jpg)
+![Bacteria](Images/bacteria.jpg)
 
 In this challenge, an interactive dashboard was built to explore the [Belly Button Biodiversity dataset](http://robdunnlab.com/projects/belly-button-biodiversity/), which catalogs the microbes that colonize human navels.
 
