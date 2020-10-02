@@ -110,13 +110,21 @@ function buildPlots(id) {
         var Bubblelayout = {
             title: `<span style='font-size:1em; color:#00bcf2'><b>OTU Data for Subject ${id}<b></span>`,
             xaxis: {title:'OTU ID'},
-            yaxis: {title: 'Sample Values'}
+            yaxis: {title: 'Sample Values'},
+            width: window.width
         };
 
         // Creating Bubble Chart
         Plotly.newPlot('bubble', Bubbledata, Bubblelayout);
 
     }).catch(error => console.log(error));
+}
+
+// Cleaning up the demographic keys
+function proper(str){
+    return str.toLowerCase().split(' ').map(letter => {
+        return (letter.charAt(0).toUpperCase() + letter.slice(1));
+    }).join(' ');
 }
 
 // Demographics
@@ -135,7 +143,7 @@ function demographics(id) {
         Object.entries(filtered[0]).forEach(([k,v]) => {
             // console.log(k,v)
             selection.append('h5')
-                .text(`${k}: ${v}`);
+                .text(`${proper(k)}: ${v}`);
         });
 
         
