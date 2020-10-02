@@ -6,6 +6,10 @@ In this challenge, an interactive dashboard was built to explore the [Belly Butt
 
 The dataset reveals that a small handful of microbial species (also called operational taxonomic units, or OTUs, in the study) were present in more than 70% of people, while the rest were relatively rare.
 
+## Subject Demographics
+
+![Demographics Table](Images/Demographics.PNG)
+
 ## Top 10 OTUs Per Subject
 
   ![Top 10 Bar Chart](Images/Top10Bar.png)
@@ -13,8 +17,6 @@ The dataset reveals that a small handful of microbial species (also called opera
 ## All OTUs Per Subject
 
 ![Bubble Chart](Images/BubbleChart.png)
-
-4. Display the sample metadata, i.e., an individual's demographic information.
 
 5. Display each key-value pair from the metadata JSON object somewhere on the page.
 
